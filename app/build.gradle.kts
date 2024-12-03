@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.plcoding.mastermeme"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.plcoding.mastermeme"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 

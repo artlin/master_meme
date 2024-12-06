@@ -2,6 +2,8 @@ package com.plcoding.mastermeme.core.presentation.base
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.toRoute
 import com.plcoding.mastermeme.core.presentation.navigation.NavigationController
 import com.plcoding.mastermeme.core.presentation.navigation.route.NavigationRoute
 import org.koin.core.component.KoinComponent
@@ -14,6 +16,9 @@ abstract class BaseViewModel<UIState, UIEvent> :
 
     private val navController: NavigationController by inject()
 
+    init {
+        handleNavParams()
+    }
 
     abstract fun getDefaultState(): UIState
 
@@ -35,6 +40,17 @@ abstract class BaseViewModel<UIState, UIEvent> :
         set(value) {
             uiState = value
         }
+
+
+    private fun handleNavParams() {
+        val backStackEntry =
+            navController.getCurrentNavController()?.currentBackStackEntry ?: return
+        handleNavigation(backStackEntry)
+    }
+
+    protected open fun handleNavigation(backStackEntry: NavBackStackEntry) {
+
+    }
 
     fun navigateTo(navRoute: NavigationRoute) = navController.navigateTo(navRoute)
 }

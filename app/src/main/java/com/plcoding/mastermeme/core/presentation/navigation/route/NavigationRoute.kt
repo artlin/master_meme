@@ -8,5 +8,9 @@ sealed interface NavigationRoute {
     data object YourMemes : NavigationRoute
 
     @Serializable
-    data object MemeEditor : NavigationRoute
+    data class MemeEditor(val memeEditorParams: MemeEditorParams = MemeEditorParams()) :
+        NavigationRoute
 }
+
+@Serializable
+data class MemeEditorParams(val memeId: Int? = null)

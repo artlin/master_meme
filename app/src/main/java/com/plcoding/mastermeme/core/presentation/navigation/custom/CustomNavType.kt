@@ -1,5 +1,9 @@
 package com.plcoding.mastermeme.core.presentation.navigation.custom
 
+import SerializableNavType
+import com.plcoding.mastermeme.core.presentation.navigation.route.MemeEditorParams
+import kotlin.reflect.typeOf
+
 /**
  * Example :
  * val AlarmMetadataNavType = SerializableNavType<AlarmEntity?>(
@@ -9,5 +13,9 @@ package com.plcoding.mastermeme.core.presentation.navigation.custom
  */
 object CustomNavType {
 
+    val MemeEditorNavType = SerializableNavType<MemeEditorParams>(
+        type=typeOf<MemeEditorParams>(),
+        isNullableAllowed = false
+    )
 
 }

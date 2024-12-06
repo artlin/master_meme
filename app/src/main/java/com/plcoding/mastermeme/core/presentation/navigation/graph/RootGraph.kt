@@ -7,12 +7,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.plcoding.mastermeme.core.presentation.navigation.custom.CustomNavType
+import com.plcoding.mastermeme.core.presentation.navigation.route.MemeEditorParams
 import com.plcoding.mastermeme.core.presentation.navigation.route.NavigationRoute.*
 import com.plcoding.mastermeme.core.presentation.screen.editor.MemeEditorViewModel
 import com.plcoding.mastermeme.core.presentation.ui.screen.MemeEditorScreen
 import com.plcoding.mastermeme.core.presentation.screen.your_memes.YourMemesViewModel
 import com.plcoding.mastermeme.core.presentation.ui.screen.YourMemesScreen
 import org.koin.compose.viewmodel.koinViewModel
+import kotlin.reflect.typeOf
 
 @Composable
 fun RootGraph(
@@ -29,7 +32,11 @@ fun RootGraph(
             YourMemesScreen(uiState = viewModel.uiState, onEvent = { viewModel.onEvent(it) })
         }
 
-        composable<MemeEditor> {
+        composable<MemeEditor>(
+            typeMap = mapOf(
+                typeOf<MemeEditorParams>() to CustomNavType.MemeEditorNavType
+            )
+        ) {
             val viewModel: MemeEditorViewModel = koinViewModel()
             MemeEditorScreen(uiState = viewModel.uiState, onEvent = { viewModel.onEvent(it) })
         }

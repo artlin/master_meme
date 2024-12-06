@@ -1,4 +1,4 @@
-package com.plcoding.mastermeme.ui.theme
+package com.plcoding.mastermeme.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

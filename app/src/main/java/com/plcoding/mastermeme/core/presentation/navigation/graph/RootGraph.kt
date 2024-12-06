@@ -9,9 +9,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.plcoding.mastermeme.core.presentation.navigation.route.NavigationRoute.*
 import com.plcoding.mastermeme.core.presentation.screen.editor.MemeEditorViewModel
-import com.plcoding.mastermeme.core.presentation.screen.editor.ui.MemeEditorScreen
+import com.plcoding.mastermeme.core.presentation.ui.screen.MemeEditorScreen
 import com.plcoding.mastermeme.core.presentation.screen.your_memes.YourMemesViewModel
-import com.plcoding.mastermeme.core.presentation.screen.your_memes.ui.YourMemesScreen
+import com.plcoding.mastermeme.core.presentation.ui.screen.YourMemesScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

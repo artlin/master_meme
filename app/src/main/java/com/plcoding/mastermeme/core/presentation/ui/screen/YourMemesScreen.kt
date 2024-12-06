@@ -1,4 +1,4 @@
-package com.plcoding.mastermeme.core.presentation.screen.your_memes.ui
+package com.plcoding.mastermeme.core.presentation.ui.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

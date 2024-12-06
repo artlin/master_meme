@@ -1,4 +1,4 @@
-package com.plcoding.mastermeme.core.presentation.screen.editor.ui
+package com.plcoding.mastermeme.core.presentation.ui.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

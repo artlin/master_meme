@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.plcoding.mastermeme.presentation.navigation.route.NavigationRoute
-import com.plcoding.mastermeme.presentation.screen.your_memes.YourMemesScreen
+import com.plcoding.mastermeme.presentation.screen.your_memes.ui.YourMemesScreen
 import com.plcoding.mastermeme.presentation.screen.your_memes.YourMemesViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -23,8 +23,8 @@ fun RootGraph(
         startDestination = NavigationRoute.YourMemes
     ) {
         composable<NavigationRoute.YourMemes> {
-            val viewModel : YourMemesViewModel = koinViewModel()
-            YourMemesScreen(viewModel.uiState)
+            val viewModel: YourMemesViewModel = koinViewModel()
+            YourMemesScreen(uiState = viewModel.uiState, onEvent = { viewModel.onEvent(it) })
         }
     }
 //        composable<NavigationRoute.Alarms> {

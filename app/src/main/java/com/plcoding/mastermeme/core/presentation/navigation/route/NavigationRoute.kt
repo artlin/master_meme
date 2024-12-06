@@ -6,4 +6,7 @@ import kotlinx.serialization.Serializable
 sealed interface NavigationRoute {
     @Serializable
     data object YourMemes : NavigationRoute
+
+    @Serializable
+    data object MemeEditor : NavigationRoute
 }

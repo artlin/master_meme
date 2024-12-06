@@ -2,10 +2,18 @@ package com.plcoding.mastermeme.core.presentation.base
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.plcoding.mastermeme.core.presentation.navigation.NavigationController
+import com.plcoding.mastermeme.core.presentation.navigation.route.NavigationRoute
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-abstract class BaseViewModel<UIState, UIEvent>() :
+abstract class BaseViewModel<UIState, UIEvent> :
     ViewModel(),
+    KoinComponent,
     ViewModelInterface<UIState, UIEvent> {
+
+    private val navController: NavigationController by inject()
+
 
     abstract fun getDefaultState(): UIState
 
@@ -27,4 +35,6 @@ abstract class BaseViewModel<UIState, UIEvent>() :
         set(value) {
             uiState = value
         }
+
+    fun navigateTo(navRoute: NavigationRoute) = navController.navigateTo(navRoute)
 }

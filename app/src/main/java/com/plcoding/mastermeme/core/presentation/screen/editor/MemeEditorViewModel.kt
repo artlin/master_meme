@@ -11,7 +11,7 @@ class MemeEditorViewModel : BaseViewModel<UIMemeEditorState, UIMemeEditorEvent>(
 
     }
 
-    override fun getDefaultState(): UIMemeEditorState {
+    override fun getDefaultUIState(): UIMemeEditorState {
         return UIMemeEditorState("")
     }
 

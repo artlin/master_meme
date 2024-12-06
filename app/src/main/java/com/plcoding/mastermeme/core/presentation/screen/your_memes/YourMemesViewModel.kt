@@ -19,7 +19,7 @@ class YourMemesViewModel : BaseViewModel<UIStateYourMemes, UIEventYourMemes>() {
         }
     }
 
-    override fun getDefaultState(): UIStateYourMemes {
+    override fun getDefaultUIState(): UIStateYourMemes {
         return UIStateYourMemes(emptyList())
     }
 }

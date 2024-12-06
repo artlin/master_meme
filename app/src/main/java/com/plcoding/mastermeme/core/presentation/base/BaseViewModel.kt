@@ -3,7 +3,6 @@ package com.plcoding.mastermeme.core.presentation.base
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.toRoute
 import com.plcoding.mastermeme.core.presentation.navigation.NavigationController
 import com.plcoding.mastermeme.core.presentation.navigation.route.NavigationRoute
 import org.koin.core.component.KoinComponent
@@ -20,13 +19,13 @@ abstract class BaseViewModel<UIState, UIEvent> :
         handleNavParams()
     }
 
-    abstract fun getDefaultState(): UIState
+    abstract fun getDefaultUIState(): UIState
 
     /**
      * delegation for uiState,
      * so we don't need to do uiState.value = value, just uiState = value
      */
-    override var uiState: UIState by UIStateDelegate(mutableStateOf(getDefaultState()))
+    override var uiState: UIState by UIStateDelegate(mutableStateOf(getDefaultUIState()))
 
 
     /**

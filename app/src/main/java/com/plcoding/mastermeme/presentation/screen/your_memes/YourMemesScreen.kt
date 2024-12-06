@@ -7,6 +7,6 @@ import com.plcoding.mastermeme.presentation.ui.text.TextBodyBig
 @Composable
 fun YourMemesScreen(uiState: UIStateYourMemes) {
 
-    TextBodyBig(text = "Size of items :${uiState.memeList.size}", color = Color.Black)
+    TextBodyBig(text = "Size of items :${uiState.memeList.size}", color = Color.White)
 
 }

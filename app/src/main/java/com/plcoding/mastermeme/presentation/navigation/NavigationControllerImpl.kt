@@ -1,4 +1,4 @@
-package com.plcoding.snoozeloo.navigation
+package com.plcoding.mastermeme.presentation.navigation
 
 import androidx.navigation.NavHostController
 import com.plcoding.mastermeme.presentation.navigation.route.NavigationRoute

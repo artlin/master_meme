@@ -7,8 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
 import com.plcoding.mastermeme.presentation.navigation.graph.RootGraph
 import com.plcoding.mastermeme.presentation.ui.theme.MasterMemeTheme
-import com.plcoding.snoozeloo.navigation.NavigationController
-import com.plcoding.snoozeloo.navigation.NavigationControllerImpl
+import com.plcoding.mastermeme.presentation.navigation.NavigationController
+import com.plcoding.mastermeme.presentation.navigation.NavigationControllerImpl
 import org.koin.compose.koinInject
 
 class MainActivity : ComponentActivity() {

@@ -1,20 +1,32 @@
 package com.plcoding.mastermeme.presentation.navigation.graph
 
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.plcoding.mastermeme.presentation.navigation.route.NavigationRoute
+import com.plcoding.mastermeme.presentation.screen.your_memes.YourMemesScreen
+import com.plcoding.mastermeme.presentation.screen.your_memes.YourMemesViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun RootGraph(
     navController: NavHostController,
-    innerPadding: PaddingValues,
 ) {
 
-//    NavHost(
-//        modifier = Modifier.padding(innerPadding).padding(10.dp),
-//        navController = navController,
-//        startDestination = NavigationRoute.Alarms
-//    ) {
+    NavHost(
+        modifier = Modifier.padding(10.dp),
+        navController = navController,
+        startDestination = NavigationRoute.YourMemes
+    ) {
+        composable<NavigationRoute.YourMemes> {
+            val viewModel : YourMemesViewModel = koinViewModel()
+            YourMemesScreen(viewModel.uiState)
+        }
+    }
 //        composable<NavigationRoute.Alarms> {
 //            val viewModel: AlarmListViewModel = koinViewModel()
 //            AlarmListScreen(viewModel.uiState.value, onAlarmList = { viewModel.onEvent(it) })

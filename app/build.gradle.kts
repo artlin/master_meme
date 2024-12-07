@@ -80,4 +80,10 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.coil.compose)
 
+    // For ExperimentalMaterialApi bottom sheet
+    implementation("androidx.compose.material:material:1.7.5")
+
+    // For Material 3 ExperimentalMaterial3Api bottom sheet
+    implementation("androidx.compose.material3:material3:1.3.1")
+
 }

@@ -1,4 +1,4 @@
-package com.plcoding.mastermeme.core.domain.model
+package com.plcoding.mastermeme.feature_templates.domain
 
 import com.plcoding.mastermeme.core.domain.value.ImageLocation
 import com.plcoding.mastermeme.core.domain.value.TemplateName

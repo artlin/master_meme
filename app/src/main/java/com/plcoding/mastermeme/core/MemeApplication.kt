@@ -1,6 +1,7 @@
 package com.plcoding.mastermeme.core
 
 import android.app.Application
+import com.plcoding.mastermeme.core.di.domainModule
 import com.plcoding.mastermeme.core.di.presentationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -15,7 +16,7 @@ class MemeApplication : Application() {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@MemeApplication)
-            modules(presentationModule)
+            modules(presentationModule, domainModule)
         }
 
     }

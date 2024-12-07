@@ -10,6 +10,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val presentationModule = module {
+
     viewModelOf(::YourMemesViewModel)
     viewModelOf(::MemeEditorViewModel)
     singleOf(::NavigationControllerImpl) { bind<NavigationController>() }

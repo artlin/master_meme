@@ -1,11 +1,10 @@
 package com.plcoding.mastermeme.core.presentation.screen.editor
 
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.toRoute
 import com.plcoding.mastermeme.core.presentation.base.BaseViewModel
 import com.plcoding.mastermeme.core.presentation.navigation.route.NavigationRoute
 
 class MemeEditorViewModel : BaseViewModel<UIMemeEditorState, UIMemeEditorEvent>() {
+
 
     override fun onEvent(event: UIMemeEditorEvent) {
 
@@ -15,9 +14,10 @@ class MemeEditorViewModel : BaseViewModel<UIMemeEditorState, UIMemeEditorEvent>(
         return UIMemeEditorState("")
     }
 
-    override fun handleNavigation(backStackEntry: NavBackStackEntry) {
-        val navParams = backStackEntry.toRoute<NavigationRoute.MemeEditor>().memeEditorParams
-        val memeId = navParams.memeId
-        memeId
+    override fun handleNavigation() {
+        getParams<NavigationRoute.MemeEditor> { navParams ->
+            val memeId = navParams.memeEditorParams
+            memeId
+        }
     }
 }

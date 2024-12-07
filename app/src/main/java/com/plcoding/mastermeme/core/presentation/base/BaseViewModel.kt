@@ -2,7 +2,7 @@ package com.plcoding.mastermeme.core.presentation.base
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavBackStackEntry
+import androidx.navigation.toRoute
 import com.plcoding.mastermeme.core.presentation.navigation.NavigationController
 import com.plcoding.mastermeme.core.presentation.navigation.route.NavigationRoute
 import org.koin.core.component.KoinComponent
@@ -13,10 +13,10 @@ abstract class BaseViewModel<UIState, UIEvent> :
     KoinComponent,
     ViewModelInterface<UIState, UIEvent> {
 
-    private val navController: NavigationController by inject()
+    val navController: NavigationController by inject()
 
     init {
-        handleNavParams()
+        handleNavigation()
     }
 
     abstract fun getDefaultUIState(): UIState
@@ -42,14 +42,38 @@ abstract class BaseViewModel<UIState, UIEvent> :
 
 
     private fun handleNavParams() {
+
+
+    }
+
+    protected open fun handleNavigation() {
+
+    }
+
+    protected inline fun <reified T> getParams(callback: (para: T) -> Unit) {
         val backStackEntry =
             navController.getCurrentNavController()?.currentBackStackEntry ?: return
-        handleNavigation(backStackEntry)
-    }
-
-    protected open fun handleNavigation(backStackEntry: NavBackStackEntry) {
+        callback(backStackEntry.toRoute<T>())
 
     }
 
-    fun navigateTo(navRoute: NavigationRoute) = navController.navigateTo(navRoute)
+    protected fun navigateTo(navRoute: NavigationRoute) = navController.navigateTo(navRoute)
+
+
+//
+//    with(navigationController) {
+//        viewModelScope.watchStateHandle<String>(
+//            key = SELECTED_RINGTONE_KEY,
+//            defaultValue = null
+//        ) { ringtoneUri ->
+//            ringtoneUri?.let {
+//                val selectedRingtone = ringtonesManager.getRingtoneByUri(ringtoneUri)
+//                newState = uiState.value.copy(
+//                    selectedRingtoneEntity = selectedRingtone
+//                )
+//            }
+//            validateUi()
+//        }
+//    }
+
 }

@@ -17,7 +17,7 @@ class TemplatesProviderImpl : TemplatesProvider {
         "2 Epic-Handshake.jpg",
         "3 Left-Exit-12-Off-Ramp.jpg",
         "4 Sad-Pablo-Escobar.jpg",
-        "5. Change-My-Mind.jpg",
+        "5. Change-My-Mind .jpg",
         "6. Two-Buttons.jpg",
         "7. Hide-the-Pain-Harold.jpg",
         "8. The-Rock-Driving.jpg",

@@ -9,35 +9,34 @@ import com.plcoding.mastermeme.feature_templates.presentation.BottomSheetState
 import com.plcoding.mastermeme.feature_templates.presentation.BottomSheetVisibility
 
 class YourMemesViewModel(
-    private val memeDataFactory: MemeDataFactory,
-    private val templatesProvider: TemplatesProvider
-) :
-    BaseViewModel<UIStateYourMemes, UIEventYourMemes>() {
+    private val memeDataFactory: MemeDataFactory, private val templatesProvider: TemplatesProvider
+) : BaseViewModel<UIStateYourMemes, UIEventYourMemes>() {
 
     override fun onEvent(event: UIEventYourMemes) {
         when (event) {
             UIEventYourMemes.OnClick -> {
                 // fixme : showcase test only
                 if (uiState.memeList.size == 1) {
-                    newState = uiState.updateBottomSheetState {
-                        it.open(templateList = templatesProvider.getAllTemplates())
+                    newState = uiState.updateBottomSheetState { state ->
+                        state.open(templateList = templatesProvider.getAllTemplates())
                     }
                 }
+                // fixme : showcase test only
                 newState = uiState.copy(memeList = listOf(memeDataFactory.getFakeMemeData()))
             }
 
             is UIEventYourMemes.OnUserChangedSheetState -> {
-                val requestedState = event.requestedVisibility
-                if (uiState.bottomSheetState.visibility != requestedState) {
-                    newState = uiState.updateBottomSheetState {
-                        it.copy(visibility = requestedState)
+                val requestedVisibility = event.requestedVisibility
+                if (uiState.bottomSheetState.visibility != requestedVisibility) {
+                    newState = uiState.updateBottomSheetState { state ->
+                        state.setVisibility(visibility = requestedVisibility)
                     }
                 }
             }
 
             is UIEventYourMemes.OnTemplateClick -> {
-                newState = uiState.updateBottomSheetState {
-                    it.close()
+                newState = uiState.updateBottomSheetState { state ->
+                    state.close()
                 }
                 navigateTo(NavigationRoute.MemeEditor(MemeEditorParams(template = event.template)))
             }
@@ -46,8 +45,7 @@ class YourMemesViewModel(
 
     override fun getDefaultUIState(): UIStateYourMemes {
         return UIStateYourMemes(
-            memeList = emptyList(),
-            bottomSheetState = BottomSheetState(
+            memeList = emptyList(), bottomSheetState = BottomSheetState(
                 visibility = BottomSheetVisibility.Hidden,
                 templateList = emptyList(),
             )

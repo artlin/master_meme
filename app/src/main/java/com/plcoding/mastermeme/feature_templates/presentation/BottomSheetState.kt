@@ -15,6 +15,9 @@ data class BottomSheetState(
     fun close(): BottomSheetState = copy(
         visibility = BottomSheetVisibility.Hidden,
     )
+
+    fun setVisibility(visibility: BottomSheetVisibility): BottomSheetState =
+        copy(visibility = visibility)
 }
 
 sealed interface BottomSheetVisibility {

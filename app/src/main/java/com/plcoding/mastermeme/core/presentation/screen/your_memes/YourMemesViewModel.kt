@@ -2,6 +2,8 @@ package com.plcoding.mastermeme.core.presentation.screen.your_memes
 
 import com.plcoding.mastermeme.core.domain.factory.MemeDataFactory
 import com.plcoding.mastermeme.core.presentation.base.BaseViewModel
+import com.plcoding.mastermeme.core.presentation.navigation.route.MemeEditorParams
+import com.plcoding.mastermeme.core.presentation.navigation.route.NavigationRoute
 import com.plcoding.mastermeme.feature_templates.data.TemplatesProvider
 import com.plcoding.mastermeme.feature_templates.presentation.BottomSheetState
 import com.plcoding.mastermeme.feature_templates.presentation.BottomSheetVisibility
@@ -17,12 +19,8 @@ class YourMemesViewModel(
             UIEventYourMemes.OnClick -> {
                 // fixme : showcase test only
                 if (uiState.memeList.size == 1) {
-//                    navigateTo(NavigationRoute.MemeEditor(MemeEditorParams(666)))
                     newState = uiState.updateBottomSheetState {
-                        it.copy(
-                            visibility = BottomSheetVisibility.FullyExpanded,
-                            templateList = templatesProvider.getAllTemplates()
-                        )
+                        it.open(templateList = templatesProvider.getAllTemplates())
                     }
                 }
                 newState = uiState.copy(memeList = listOf(memeDataFactory.getFakeMemeData()))
@@ -35,6 +33,13 @@ class YourMemesViewModel(
                         it.copy(visibility = requestedState)
                     }
                 }
+            }
+
+            is UIEventYourMemes.OnTemplateClick -> {
+                newState = uiState.updateBottomSheetState {
+                    it.close()
+                }
+                navigateTo(NavigationRoute.MemeEditor(MemeEditorParams(template = event.template)))
             }
         }
     }

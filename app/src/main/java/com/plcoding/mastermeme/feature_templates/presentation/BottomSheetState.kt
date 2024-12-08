@@ -7,6 +7,14 @@ data class BottomSheetState(
     val templateList: List<TemplateData>
 ) {
     fun isVisible(): Boolean = visibility != BottomSheetVisibility.Hidden
+    fun open(templateList: List<TemplateData>): BottomSheetState = copy(
+        visibility = BottomSheetVisibility.HalfExpanded,
+        templateList = templateList
+    )
+
+    fun close(): BottomSheetState = copy(
+        visibility = BottomSheetVisibility.Hidden,
+    )
 }
 
 sealed interface BottomSheetVisibility {

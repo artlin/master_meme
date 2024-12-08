@@ -1,5 +1,6 @@
 package com.plcoding.mastermeme.core.presentation.navigation.route
 
+import com.plcoding.mastermeme.feature_templates.domain.TemplateData
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,4 +14,4 @@ sealed interface NavigationRoute {
 }
 
 @Serializable
-data class MemeEditorParams(val memeId: Int? = null)
+data class MemeEditorParams(val template: TemplateData? = null)

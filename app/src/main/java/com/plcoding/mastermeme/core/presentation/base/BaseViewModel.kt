@@ -15,10 +15,6 @@ abstract class BaseViewModel<UIState, UIEvent> :
 
     val navController: NavigationController by inject()
 
-    init {
-        handleNavigation()
-    }
-
     abstract fun getDefaultUIState(): UIState
 
     /**
@@ -27,6 +23,9 @@ abstract class BaseViewModel<UIState, UIEvent> :
      */
     override var uiState: UIState by UIStateDelegate(mutableStateOf(getDefaultUIState()))
 
+    init {
+        handleNavigation()
+    }
 
     /**
      * shortcut for setting value to state
@@ -40,12 +39,6 @@ abstract class BaseViewModel<UIState, UIEvent> :
             uiState = value
         }
 
-
-    private fun handleNavParams() {
-
-
-    }
-
     protected open fun handleNavigation() {
 
     }
@@ -53,8 +46,7 @@ abstract class BaseViewModel<UIState, UIEvent> :
     protected inline fun <reified T> getParams(callback: (para: T) -> Unit) {
         val backStackEntry =
             navController.getCurrentNavController()?.currentBackStackEntry ?: return
-        callback(backStackEntry.toRoute<T>())
-
+        callback( backStackEntry.toRoute<T>())
     }
 
     protected fun navigateTo(navRoute: NavigationRoute) = navController.navigateTo(navRoute)

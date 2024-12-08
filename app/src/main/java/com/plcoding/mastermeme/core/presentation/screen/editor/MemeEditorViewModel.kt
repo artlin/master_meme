@@ -9,11 +9,6 @@ class MemeEditorViewModel(private val templatesProvider: TemplatesProvider) :
     BaseViewModel<UIMemeEditorState, UIMemeEditorEvent>(), KoinComponent {
 
 
-
-    init {
-        newState = uiState.copy(tempTemplate = templatesProvider.getAllTemplates().first())
-    }
-
     override fun onEvent(event: UIMemeEditorEvent) {
 
     }
@@ -24,8 +19,8 @@ class MemeEditorViewModel(private val templatesProvider: TemplatesProvider) :
 
     override fun handleNavigation() {
         getParams<NavigationRoute.MemeEditor> { navParams ->
-            val memeId = navParams.memeEditorParams
-            memeId
+            val params = navParams.memeEditorParams
+            newState = uiState.copy(tempTemplate = params.template)
         }
     }
 }

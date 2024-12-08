@@ -2,8 +2,6 @@ package com.plcoding.mastermeme.core.presentation.screen.your_memes
 
 import com.plcoding.mastermeme.core.domain.factory.MemeDataFactory
 import com.plcoding.mastermeme.core.presentation.base.BaseViewModel
-import com.plcoding.mastermeme.core.presentation.navigation.route.MemeEditorParams
-import com.plcoding.mastermeme.core.presentation.navigation.route.NavigationRoute
 import com.plcoding.mastermeme.feature_templates.data.TemplatesProvider
 import com.plcoding.mastermeme.feature_templates.presentation.BottomSheetState
 import com.plcoding.mastermeme.feature_templates.presentation.BottomSheetVisibility
@@ -31,12 +29,12 @@ class YourMemesViewModel(
             }
 
             is UIEventYourMemes.OnUserChangedSheetState -> {
-                val newState = event.newSheetVisibility
-//                when(newState){
-//                    BottomSheetVisibility.FullyExpanded -> TODO()
-//                    BottomSheetVisibility.HalfExpanded -> TODO()
-//                    BottomSheetVisibility.Hidden -> TODO()
-//                }
+                val requestedState = event.requestedVisibility
+                if (uiState.bottomSheetState.visibility != requestedState) {
+                    newState = uiState.updateBottomSheetState {
+                        it.copy(visibility = requestedState)
+                    }
+                }
             }
         }
     }

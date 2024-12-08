@@ -4,7 +4,7 @@ import com.plcoding.mastermeme.feature_templates.presentation.BottomSheetVisibil
 
 sealed interface UIEventYourMemes {
     object OnClick : UIEventYourMemes
-    data class OnUserChangedSheetState(val newSheetVisibility: BottomSheetVisibility) :
+    data class OnUserChangedSheetState(val requestedVisibility: BottomSheetVisibility) :
         UIEventYourMemes
 }
 

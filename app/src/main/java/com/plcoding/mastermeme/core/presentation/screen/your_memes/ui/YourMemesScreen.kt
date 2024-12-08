@@ -17,7 +17,8 @@ fun YourMemesScreen(uiState: UIStateYourMemes, onEvent: OnUIEventYourMemes) {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         BottomDrawer(uiState.bottomSheetState, onEvent)
         TextBodyBig(
-            modifier = Modifier.clickable { onEvent(UIEventYourMemes.OnClick) },
+            modifier = Modifier.clickable {
+                onEvent(UIEventYourMemes.OnClick) },
             text = "Size of items :${uiState.memeList.size}",
             color = Color.White
         )

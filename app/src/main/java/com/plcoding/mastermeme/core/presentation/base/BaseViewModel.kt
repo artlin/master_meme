@@ -46,11 +46,12 @@ abstract class BaseViewModel<UIState, UIEvent> :
     protected inline fun <reified T> getParams(callback: (para: T) -> Unit) {
         val backStackEntry =
             navController.getCurrentNavController()?.currentBackStackEntry ?: return
-        callback( backStackEntry.toRoute<T>())
+        callback(backStackEntry.toRoute<T>())
     }
 
     protected fun navigateTo(navRoute: NavigationRoute) = navController.navigateTo(navRoute)
 
+    protected fun goBack() = navController.navigateBack()
 
 //
 //    with(navigationController) {

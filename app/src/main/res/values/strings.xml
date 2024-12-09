@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Master Meme</string>
+    <string name="new_meme">New meme</string>
 </resources>

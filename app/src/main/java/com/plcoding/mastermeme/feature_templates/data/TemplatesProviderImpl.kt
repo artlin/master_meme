@@ -12,6 +12,7 @@ class TemplatesProviderImpl : TemplatesProvider {
         return templateData
     }
 
+    //todo : apply automatic files detection, passing folder name only
     private val templateData = listOf(
         "1 Disaster-Girl.jpg",
         "2 Epic-Handshake.jpg",

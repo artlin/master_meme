@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Master Meme</string>
     <string name="new_meme">New meme</string>
+    <string name="are_you_sure_you_want_to_discard_changes">Are you sure you want to discard changes?</string>
+    <string name="discard">Discard</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 </resources>

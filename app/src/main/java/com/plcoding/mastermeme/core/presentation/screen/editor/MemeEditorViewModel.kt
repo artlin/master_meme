@@ -4,21 +4,33 @@ import com.plcoding.mastermeme.core.presentation.base.BaseViewModel
 import com.plcoding.mastermeme.core.presentation.navigation.route.NavigationRoute
 import org.koin.core.component.KoinComponent
 
-class MemeEditorViewModel() :
+class MemeEditorViewModel :
     BaseViewModel<UIMemeEditorState, UIMemeEditorEvent>(), KoinComponent {
 
 
     override fun onEvent(event: UIMemeEditorEvent) {
         when (event) {
             UIMemeEditorEvent.OnBackButtonClicked -> {
-                // todo : add reset current meme logic if not saved
+                if (uiState.isEditInProgress()) {
+                    uiState = uiState.showExitConfirmationDialog()
+                } else {
+                    goBack()
+                }
+            }
+
+            UIMemeEditorEvent.OnDialogConfirmCancelClicked -> {
+                uiState = uiState.hideExitConfirmationDialog()
+            }
+
+            UIMemeEditorEvent.OnDialogConfirmDiscardClicked -> {
+                uiState = uiState.hideExitConfirmationDialog()
                 goBack()
             }
         }
     }
 
     override fun getDefaultUIState(): UIMemeEditorState {
-        return UIMemeEditorState(tempTemplate = null)
+        return UIMemeEditorState(tempTemplate = null, isExitConfirmationDialogVisible = false)
     }
 
     override fun handleNavigation() {

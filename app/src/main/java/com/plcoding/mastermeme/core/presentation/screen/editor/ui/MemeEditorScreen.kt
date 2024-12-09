@@ -31,6 +31,6 @@ fun MemeEditorScreen(uiState: UIMemeEditorState, onEvent: OnUIMemeEditorEvent) {
                 )
             }
         }
+        if (uiState.isExitConfirmationDialogVisible) ConfirmationDialog(onEvent)
     }
 }
-

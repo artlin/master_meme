@@ -12,8 +12,12 @@ import coil.size.Size
 import com.plcoding.mastermeme.core.domain.value.ImageLocation
 
 @Composable
-fun TemplateAssetImage(modifier: Modifier, assetPath: ImageLocation, isThumbnail: Boolean = false) {
-
+fun TemplateAssetImage(
+    modifier: Modifier,
+    assetPath: ImageLocation?,
+    isThumbnail: Boolean = false
+) {
+    if (assetPath == null) return
     val context = LocalContext.current
     val imageRequest = ImageRequest.Builder(context)
         .data("file:///android_asset/${assetPath.value}")

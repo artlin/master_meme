@@ -1,5 +1,6 @@
 package com.plcoding.mastermeme.core.presentation.ui.button
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
@@ -10,8 +11,8 @@ import androidx.compose.ui.res.painterResource
 import com.plcoding.mastermeme.R
 
 @Composable
-fun RedoButton(modifier: Modifier, isActive: Boolean) {
-    Box(modifier = modifier) {
+fun RedoButton(modifier: Modifier, isActive: Boolean, onClick: () -> Unit) {
+    Box(modifier = modifier.clickable { onClick() }) {
         Icon(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(id = R.drawable.icon_forward_arrow),

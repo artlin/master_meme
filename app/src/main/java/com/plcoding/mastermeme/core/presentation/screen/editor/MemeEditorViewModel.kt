@@ -2,10 +2,12 @@ package com.plcoding.mastermeme.core.presentation.screen.editor
 
 import com.plcoding.mastermeme.core.presentation.base.BaseViewModel
 import com.plcoding.mastermeme.core.presentation.navigation.route.NavigationRoute
+import com.plcoding.mastermeme.feature_editor.presentation.AddTextController
 import org.koin.core.component.KoinComponent
 
-class MemeEditorViewModel :
-    BaseViewModel<UIMemeEditorState, UIMemeEditorEvent>(), KoinComponent {
+class MemeEditorViewModel(private val addTextController: AddTextController) :
+    BaseViewModel<UIMemeEditorState, UIMemeEditorEvent>(), KoinComponent,
+    AddTextController by addTextController {
 
 
     override fun onEvent(event: UIMemeEditorEvent) {
@@ -25,6 +27,15 @@ class MemeEditorViewModel :
             UIMemeEditorEvent.OnDialogConfirmDiscardClicked -> {
                 uiState = uiState.hideExitConfirmationDialog()
                 goBack()
+            }
+
+            is AddTextPanelEvent -> {
+                when (event) {
+                    AddTextPanelEvent.AddAddTextClicked -> addRandomText()
+                    AddTextPanelEvent.RedoButtonClicked -> {}
+                    AddTextPanelEvent.SaveMemeClicked -> {}
+                    AddTextPanelEvent.UndoButtonClicked -> {}
+                }
             }
         }
     }

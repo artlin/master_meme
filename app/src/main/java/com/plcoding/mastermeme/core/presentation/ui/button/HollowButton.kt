@@ -17,8 +17,8 @@ import com.plcoding.mastermeme.core.presentation.ui.text.TextButton
 @Composable
 fun HollowTextButton(modifier: Modifier, text: String, onClick: () -> Unit) {
     OutlinedButton(
-        modifier = modifier.clickable { onClick() },
-        onClick = { /* Handle click */ },
+        modifier = modifier,
+        onClick = { onClick() },
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)),
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.outlinedButtonColors(

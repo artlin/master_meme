@@ -1,6 +1,5 @@
 package com.plcoding.mastermeme.core.presentation.ui.button
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -14,8 +13,8 @@ import com.plcoding.mastermeme.core.presentation.ui.text.TextButton
 @Composable
 fun FilledTextButton(modifier: Modifier, text: String, onClick: () -> Unit) {
     Button(
-        modifier = modifier.clickable { onClick() },
-        onClick = { /* Handle click */ },
+        modifier = modifier,
+        onClick = { onClick() },
         shape = RoundedCornerShape(8.dp),
     ) {
         TextButton(text = text, color = MaterialTheme.colorScheme.onPrimary)

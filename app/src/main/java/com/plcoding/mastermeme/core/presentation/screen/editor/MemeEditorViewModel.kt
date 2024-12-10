@@ -30,7 +30,11 @@ class MemeEditorViewModel :
     }
 
     override fun getDefaultUIState(): UIMemeEditorState {
-        return UIMemeEditorState(tempTemplate = null, isExitConfirmationDialogVisible = false)
+        return UIMemeEditorState(
+            tempTemplate = null,
+            isExitConfirmationDialogVisible = false,
+            rootViewState = RootViewState.AddTextView
+        )
     }
 
     override fun handleNavigation() {

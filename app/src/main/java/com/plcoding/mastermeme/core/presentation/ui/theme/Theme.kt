@@ -18,6 +18,7 @@ private val DarkColorScheme = darkColorScheme(
     surfaceContainerLow = CharcoalGray,
     surfaceContainerLowest = DarkGreenBlack,
     onSurface = PaleLavender,
+    onSecondary = LavenderGray,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -27,6 +28,7 @@ private val LightColorScheme = lightColorScheme(
     surfaceContainerLow = CharcoalGray,
     surfaceContainerLowest = DarkGreenBlack,
     onSurface = PaleLavender,
+    onSecondary = LavenderGray,
 )
 
 @Composable

@@ -1,4 +1,4 @@
-package com.plcoding.mastermeme.core.presentation.screen.editor.ui
+package com.plcoding.mastermeme.feature_editor.presentation.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

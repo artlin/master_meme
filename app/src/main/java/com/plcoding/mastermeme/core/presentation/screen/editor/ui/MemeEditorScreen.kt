@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -21,10 +22,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.plcoding.mastermeme.R
 import com.plcoding.mastermeme.core.presentation.screen.editor.OnUIMemeEditorEvent
 import com.plcoding.mastermeme.core.presentation.screen.editor.RootViewState
 import com.plcoding.mastermeme.core.presentation.screen.editor.UIMemeEditorState
+import com.plcoding.mastermeme.core.presentation.ui.button.FilledTextButton
+import com.plcoding.mastermeme.core.presentation.ui.button.HollowTextButton
 import com.plcoding.mastermeme.core.presentation.ui.button.RedoButton
 import com.plcoding.mastermeme.core.presentation.ui.button.UndoButton
 import com.plcoding.mastermeme.core.presentation.ui.text.TextBodyRegular
@@ -85,11 +90,17 @@ fun BottomAddTextView() {
     ) {
         Row(
             Modifier.padding(horizontal = 10.dp),
-            horizontalArrangement = Arrangement.spacedBy(32.dp)
+            horizontalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             UndoButton(modifier = arrowModifiers, isActive = false)
             RedoButton(modifier = arrowModifiers, isActive = false)
         }
+        HollowTextButton(Modifier, stringResource(R.string.add_text), onClick = {})
+        FilledTextButton(
+            Modifier.wrapContentWidth(),
+            stringResource(R.string.save_meme),
+            onClick = {})
+
     }
 }
 

@@ -16,11 +16,9 @@ import com.plcoding.mastermeme.feature_templates.domain.TemplateData
 import com.plcoding.mastermeme.feature_templates.presentation.ui.TemplateAssetImage
 
 @Composable
-fun DesignOutputArea(template: TemplateData?, onEvent: OnUIMemeEditorEvent) {
+fun DesignOutputArea(modifier: Modifier, template: TemplateData?, onEvent: OnUIMemeEditorEvent) {
     Box(
-        Modifier
-            .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.surfaceContainerLowest)
+        modifier = modifier
     ) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 

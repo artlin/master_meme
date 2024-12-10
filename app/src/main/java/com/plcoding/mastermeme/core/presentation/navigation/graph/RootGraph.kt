@@ -23,7 +23,6 @@ fun RootGraph(
 ) {
 
     NavHost(
-        modifier = Modifier.padding(10.dp),
         navController = navController,
         startDestination = YourMemes
     ) {

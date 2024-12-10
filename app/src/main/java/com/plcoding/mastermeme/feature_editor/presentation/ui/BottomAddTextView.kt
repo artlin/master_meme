@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.plcoding.mastermeme.R
-import com.plcoding.mastermeme.core.presentation.screen.editor.AddTextPanelEvent
+import com.plcoding.mastermeme.core.presentation.screen.editor.UIAddTextPanelEvent
 import com.plcoding.mastermeme.core.presentation.screen.editor.OnUIMemeEditorEvent
 import com.plcoding.mastermeme.core.presentation.ui.button.FilledTextButton
 import com.plcoding.mastermeme.core.presentation.ui.button.HollowTextButton
@@ -40,19 +40,19 @@ fun BottomAddTextView(addTextState: UIAddTextState, onEvent: OnUIMemeEditorEvent
             horizontalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             UndoButton(modifier = arrowModifiers, isActive = false) {
-                onEvent(AddTextPanelEvent.UndoButtonClicked)
+                onEvent(UIAddTextPanelEvent.UndoButtonClicked)
             }
             RedoButton(modifier = arrowModifiers, isActive = false) {
-                onEvent(AddTextPanelEvent.RedoButtonClicked)
+                onEvent(UIAddTextPanelEvent.RedoButtonClicked)
             }
         }
         HollowTextButton(Modifier, stringResource(R.string.add_text), onClick = {
-            onEvent(AddTextPanelEvent.AddAddTextClicked)
+            onEvent(UIAddTextPanelEvent.AddUIAddTextClicked)
         })
         FilledTextButton(
             Modifier.wrapContentWidth(),
             stringResource(R.string.save_meme),
-            onClick = { onEvent(AddTextPanelEvent.SaveMemeClicked) })
+            onClick = { onEvent(UIAddTextPanelEvent.SaveMemeClicked) })
 
     }
 }

@@ -29,12 +29,18 @@ class MemeEditorViewModel(private val addTextController: AddTextController) :
                 goBack()
             }
 
-            is AddTextPanelEvent -> {
+            is UIAddTextPanelEvent -> {
                 when (event) {
-                    AddTextPanelEvent.AddAddTextClicked -> addRandomText()
-                    AddTextPanelEvent.RedoButtonClicked -> {}
-                    AddTextPanelEvent.SaveMemeClicked -> {}
-                    AddTextPanelEvent.UndoButtonClicked -> {}
+                    UIAddTextPanelEvent.AddUIAddTextClicked -> addRandomText()
+                    UIAddTextPanelEvent.RedoButtonClicked -> {}
+                    UIAddTextPanelEvent.SaveMemeClicked -> {}
+                    UIAddTextPanelEvent.UndoButtonClicked -> {}
+                    is UIAddTextPanelEvent.OnTextClicked -> {
+                        println("Clicked")
+                    }
+                    UIAddTextPanelEvent.OnTextDoubleClicked -> {
+                        println("Double Clicked ")
+                    }
                 }
             }
         }

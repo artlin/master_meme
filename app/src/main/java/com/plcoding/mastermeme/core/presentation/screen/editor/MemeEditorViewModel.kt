@@ -31,16 +31,13 @@ class MemeEditorViewModel(private val addTextController: AddTextController) :
 
             is UIAddTextPanelEvent -> {
                 when (event) {
-                    UIAddTextPanelEvent.AddUIAddTextClicked -> addRandomText()
+                    UIAddTextPanelEvent.AddTextClicked -> addNewText()
                     UIAddTextPanelEvent.RedoButtonClicked -> {}
                     UIAddTextPanelEvent.SaveMemeClicked -> {}
                     UIAddTextPanelEvent.UndoButtonClicked -> {}
-                    is UIAddTextPanelEvent.OnTextClicked -> {
-                        println("Clicked")
-                    }
-                    UIAddTextPanelEvent.OnTextDoubleClicked -> {
-                        println("Double Clicked ")
-                    }
+                    is UIAddTextPanelEvent.OnTextClicked -> handleTextClicked(textData = event.textEntryMetaData)
+                    is UIAddTextPanelEvent.OnTextDoubleClicked -> handleTextDoubleClicked(textData = event.textEntryMetaData)
+                    is UIAddTextPanelEvent.OnDragEnd -> handleDragEnd(event.textEntryMetaData,event.newPosX,event.newPosY)
                 }
             }
         }

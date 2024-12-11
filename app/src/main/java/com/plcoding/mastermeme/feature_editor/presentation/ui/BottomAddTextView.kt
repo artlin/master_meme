@@ -47,7 +47,7 @@ fun BottomAddTextView(addTextState: UIAddTextState, onEvent: OnUIMemeEditorEvent
             }
         }
         HollowTextButton(Modifier, stringResource(R.string.add_text), onClick = {
-            onEvent(UIAddTextPanelEvent.AddUIAddTextClicked)
+            onEvent(UIAddTextPanelEvent.AddTextClicked)
         })
         FilledTextButton(
             Modifier.wrapContentWidth(),

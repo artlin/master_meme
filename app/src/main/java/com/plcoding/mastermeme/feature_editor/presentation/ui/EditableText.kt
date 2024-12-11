@@ -1,3 +1,5 @@
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -10,16 +12,24 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import com.plcoding.mastermeme.core.presentation.screen.editor.OnAddTextPanelEvent
 import com.plcoding.mastermeme.core.presentation.screen.editor.UIAddTextPanelEvent
 import com.plcoding.mastermeme.core.presentation.ui.text.TextH1
-import com.plcoding.mastermeme.feature_editor.presentation.TextEntryMetaData
+import com.plcoding.mastermeme.feature_editor.domain.TextEntryMetaData
+import com.plcoding.mastermeme.feature_editor.presentation.TextEntryVisualState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.UUID
 
 @Composable
 fun EditableText(
@@ -29,8 +39,6 @@ fun EditableText(
     onEvent: OnAddTextPanelEvent
 ) {
     val density = LocalDensity.current
-    val containerCorrectionWidth: Dp = with(density) { -containerWidth.div(2).toDp() }
-    val containerCorrectionHeight: Dp = with(density) { -containerHeight.div(2).toDp() }
 
     val externalOffsetX = with(density) { ((textData.posX * containerWidth).toDp()) }
     val externalOffsetY = with(density) { (textData.posY * containerHeight).toDp() }
@@ -38,58 +46,120 @@ fun EditableText(
     var localOffsetX by remember { mutableStateOf<Dp?>(null) }
     var localOffsetY by remember { mutableStateOf<Dp?>(null) }
 
-    var lastClickTime by remember { mutableLongStateOf(0L) }
-    val doubleClickTimeWindow = 300L // Time window for double click in milliseconds
+    // Key the remembers to this specific text instance
+    var lastClickTime by remember(textData.uid) { mutableLongStateOf(0L) }
+    var waitingForDoubleClick by remember(textData.uid) { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
 
-    var textCorrectionX by remember { mutableIntStateOf(0) }
-    var textCorrectionY by remember { mutableIntStateOf(0) }
+    val doubleClickTimeWindow = 300L
 
-    Box(Modifier.wrapContentSize()) {
-        TextH1(
-            text = textData.currentText,
-            modifier = Modifier
-                .wrapContentSize()
-                .offset(
-                    x = (localOffsetX ?: externalOffsetX) + containerCorrectionWidth,
-                    y = (localOffsetY ?: externalOffsetY) + containerCorrectionHeight
-                )
-                .onGloballyPositioned {
-                    textCorrectionX = -it.size.width.div(2)
-                    textCorrectionY = -it.size.height.div(2)
+    var textWidth by remember { mutableIntStateOf(0) }
+    var textHeight by remember { mutableIntStateOf(0) }
+
+    val color = when (textData.visualState) {
+        TextEntryVisualState.Editing -> Color.Red
+        TextEntryVisualState.Focused -> Color.Green
+        TextEntryVisualState.Normal -> Color.Unspecified
+    }
+
+    val movableModifier = Modifier
+        .offset {
+            IntOffset(
+                x = (localOffsetX ?: externalOffsetX).roundToPx(),
+                y = (localOffsetY ?: externalOffsetY).roundToPx()
+            )
+        }
+        .onGloballyPositioned {
+            textWidth = it.size.width
+            textHeight = it.size.height
+        }
+        .pointerInput(UUID.randomUUID()) {
+            detectDragGestures(
+                onDragEnd = {
+                    val finalX = (localOffsetX ?: externalOffsetX)
+                    val finalY = (localOffsetY ?: externalOffsetY)
+
+                    val newPosX = with(density) {
+                        (finalX).toPx() / containerWidth
+                    }
+                    val newPosY = with(density) {
+                        (finalY).toPx() / containerHeight
+                    }
+
+                    onEvent(
+                        UIAddTextPanelEvent.OnDragEnd(
+                            textEntryMetaData = textData,
+                            newPosX = newPosX.coerceIn(0f, 1f),
+                            newPosY = newPosY.coerceIn(0f, 1f)
+                        )
+                    )
+                },
+                onDrag = { change, dragAmount ->
+                    change.consume()
+                    waitingForDoubleClick = false  // Cancel any pending single click
+
+                    val newOffsetX =
+                        (localOffsetX ?: externalOffsetX) + with(density) { dragAmount.x.toDp() }
+                    val newOffsetY =
+                        (localOffsetY ?: externalOffsetY) + with(density) { dragAmount.y.toDp() }
+
+                    val maxX = with(density) { containerWidth.toDp() - textWidth.toDp() }
+                    val maxY = with(density) { containerHeight.toDp() - textHeight.toDp() }
+
+                    localOffsetX = newOffsetX.coerceIn(0.dp, maxX)
+                    localOffsetY = newOffsetY.coerceIn(0.dp, maxY)
                 }
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onTap = {
-                            val currentTime = System.currentTimeMillis()
-                            if (currentTime - lastClickTime < doubleClickTimeWindow) {
-                                // Double click detected
-                                onEvent(UIAddTextPanelEvent.OnTextDoubleClicked)
-                            } else {
-                                // Single click detected
+            )
+        }
+
+    val tapModifier = Modifier .pointerInput(UUID.randomUUID()) {
+        detectTapGestures(
+            onTap = {
+                println(textData.currentText)
+                onEvent(UIAddTextPanelEvent.OnTextClicked(textData))
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastClickTime < doubleClickTimeWindow) {
+                    // Double click detected
+                    waitingForDoubleClick = false
+                        onEvent(UIAddTextPanelEvent.OnTextDoubleClicked(textData))
+                } else {
+
+                    // Potential single click
+                    waitingForDoubleClick = true
+                        coroutineScope.launch {
+                            delay(doubleClickTimeWindow)
+                            if (waitingForDoubleClick) {
+                                waitingForDoubleClick = false
                                 onEvent(UIAddTextPanelEvent.OnTextClicked(textData))
                             }
-                            lastClickTime = currentTime
                         }
-                    )
                 }
-                .pointerInput(Unit) {
-                    detectDragGestures { change, dragAmount ->
-                        change.consume()
+                lastClickTime = currentTime
+            }
+        )
+    }
 
-                        val newOffsetX =
-                            (localOffsetX
-                                ?: externalOffsetX) + with(density) { dragAmount.x.toDp() }
-                        val newOffsetY =
-                            (localOffsetY
-                                ?: externalOffsetY) + with(density) { dragAmount.y.toDp() }
+    val clickableModifier = Modifier.clickable {
+        onEvent(UIAddTextPanelEvent.OnTextClicked(textData))
+    }
 
-                        val maxX = with(density) { containerWidth.toDp() + textCorrectionX.toDp() }
-                        val maxY = with(density) { containerHeight.toDp() + textCorrectionY.toDp() }
-
-                        localOffsetX = newOffsetX.coerceIn(-textCorrectionX.toDp(), maxX)
-                        localOffsetY = newOffsetY.coerceIn(-textCorrectionY.toDp(), maxY)
-                    }
-                },
+    val testOffsetModifier = Modifier.offset {
+        IntOffset(
+            x = (localOffsetX ?: externalOffsetX).roundToPx(),
+            y = (localOffsetY ?: externalOffsetY).roundToPx()
+        )
+    }
+    Box(
+        Modifier
+            .wrapContentSize()
+            .then(movableModifier)
+//            .then(testOffsetModifier)
+            .then(tapModifier)
+            .background(color = color)
+    ) {
+        TextH1(
+            text = textData.currentText,
+            modifier = Modifier.wrapContentSize(),
             color = MaterialTheme.colorScheme.onSurface
         )
     }

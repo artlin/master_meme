@@ -1,34 +1,35 @@
 package com.plcoding.mastermeme.feature_editor.presentation
 
-import androidx.compose.ui.text.font.FontStyle
+import com.plcoding.mastermeme.feature_editor.domain.TextEntryMetaData
 
-data class UIAddTextState(val textEntries: Set<TextEntryMetaData>) {
-    fun randomText(): UIAddTextState {
+data class UIAddTextState(
+    val textEntries: MutableMap<String, TextEntryMetaData>
+) {
+
+    fun addNewText(newText: TextEntryMetaData): UIAddTextState {
+        val newMap = textEntries.toMutableMap()
+        newMap[newText.uid] = newText.copy()
+        return copy(textEntries = newMap)
+    }
+
+    fun updateSelectedText(newTextEntry: TextEntryMetaData): UIAddTextState {
+        // Find the exact instance from the textEntries Set
+//        val existingInstance = textEntries.find { it.uid == newTextEntry.uid } ?: return this
+        // Create new instance with updated state
+        // Create new Set by removing old and adding new instance
+//        val updatedEntries = textEntries - existingInstance + newTextEntry
+//        val updatedEntries = textEntries[] newTextEntry
+        val newMap = textEntries.toMutableMap()
+        newMap[newTextEntry.uid] = newTextEntry.copy()
         return copy(
-            textEntries = setOf(
-                TextEntryMetaData(
-                    uid = "",
-                    posX = 0f,
-                    posY = 0f,
-                    currentText = "My Text",
-                    editedText = "",
-                    textStyle = FontStyle.Normal,
-                    visualState = TextEntryVisualState.Normal
-                )
-            )
+            textEntries = newMap,
         )
     }
-}
 
-data class TextEntryMetaData(
-    val uid: String,
-    val posX: Float,
-    val posY: Float,
-    val currentText: String,
-    val editedText: String,
-    val textStyle: FontStyle,
-    val visualState: TextEntryVisualState
-)
+    fun deselectAll(): UIAddTextState {
+        return copy(textEntries = textEntries.mapValues { it.value.setNormal() }.toMutableMap())
+    }
+}
 
 sealed interface TextEntryVisualState {
     data object Normal : TextEntryVisualState

@@ -25,9 +25,6 @@ class AddTextControllerImpl(val textEntryFactory: TextEntryFactory) : AddTextCon
         val textData = textEntryFactory.createDefaultTextAtRandomPosition()
         deselectAll()
         newState = uiAddTextState.addNewText(textData)
-        selectedTextEntry = textData.setFocused()
-        newState = uiAddTextState.updateSelectedText(selectedTextEntry)
-
     }
 
     override fun handleTextClicked(textData: TextEntryMetaData) {
@@ -52,7 +49,7 @@ class AddTextControllerImpl(val textEntryFactory: TextEntryFactory) : AddTextCon
         newState = uiAddTextState.updateSelectedText(textData)
     }
 
-    private fun deselectAll() {
+    override fun deselectAll() {
         newState = uiAddTextState.deselectAll()
     }
 

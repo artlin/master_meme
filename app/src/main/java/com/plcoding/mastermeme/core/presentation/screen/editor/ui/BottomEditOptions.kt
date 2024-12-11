@@ -27,7 +27,7 @@ fun BottomEditOptions(
     ) {
         when (uiState.rootViewState) {
             RootViewState.AddTextView -> BottomAddTextView(addTextState, onEvent)
-            RootViewState.ModifyTextView -> BottomModifyTextView()
+            RootViewState.ModifyTextView -> BottomModifyTextView(onEvent)
         }
     }
 }

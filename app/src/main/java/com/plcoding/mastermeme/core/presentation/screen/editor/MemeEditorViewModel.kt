@@ -35,10 +35,24 @@ class MemeEditorViewModel(private val addTextController: AddTextController) :
                     UIAddTextPanelEvent.RedoButtonClicked -> {}
                     UIAddTextPanelEvent.SaveMemeClicked -> {}
                     UIAddTextPanelEvent.UndoButtonClicked -> {}
-                    is UIAddTextPanelEvent.OnTextClicked -> handleTextClicked(textData = event.textEntryMetaData)
+                    is UIAddTextPanelEvent.OnTextClicked -> {
+                        handleTextClicked(textData = event.textEntryMetaData)
+                        newState = uiState.goToModifyTextView()
+                    }
+
                     is UIAddTextPanelEvent.OnTextDoubleClicked -> handleTextDoubleClicked(textData = event.textEntryMetaData)
-                    is UIAddTextPanelEvent.OnDragEnd -> handleDragEnd(event.textEntryMetaData,event.newPosX,event.newPosY)
+                    is UIAddTextPanelEvent.OnDragEnd -> handleDragEnd(
+                        event.textEntryMetaData,
+                        event.newPosX,
+                        event.newPosY
+                    )
                 }
+            }
+
+            UIMemeEditorEvent.OnEditCancelClicked -> {
+                deselectAll()
+                newState = uiState.goToAddTextView()
+                // add cancelation logic, resume previous view
             }
         }
     }

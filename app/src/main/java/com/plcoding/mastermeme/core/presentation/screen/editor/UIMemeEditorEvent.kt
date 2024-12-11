@@ -4,6 +4,7 @@ sealed interface UIMemeEditorEvent {
     data object OnBackButtonClicked : UIMemeEditorEvent
     data object OnDialogConfirmDiscardClicked : UIMemeEditorEvent
     data object OnDialogConfirmCancelClicked : UIMemeEditorEvent
+    data object OnEditCancelClicked : UIMemeEditorEvent
 }
 
 typealias OnUIMemeEditorEvent = (UIMemeEditorEvent) -> Unit

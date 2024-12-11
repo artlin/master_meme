@@ -42,8 +42,7 @@ fun DesignOutputArea(
             val containerHeight = constraints.maxHeight.toFloat()
 
             TemplateAssetImage(
-                Modifier
-                    .fillMaxSize(),
+                Modifier.fillMaxSize(),
                 assetPath = template?.imageLocation
             )
             addTextState.textEntries.forEach {

@@ -39,9 +39,3 @@ fun MemeEditorScreen(
         if (uiRootState.isExitConfirmationDialogVisible) ConfirmationDialog(onEvent)
     }
 }
-
-@Composable
-fun BottomModifyTextView() {
-
-}
-

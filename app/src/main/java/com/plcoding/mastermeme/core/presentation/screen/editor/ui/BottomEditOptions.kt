@@ -11,12 +11,14 @@ import com.plcoding.mastermeme.core.presentation.screen.editor.OnUIMemeEditorEve
 import com.plcoding.mastermeme.core.presentation.screen.editor.RootViewState
 import com.plcoding.mastermeme.core.presentation.screen.editor.UIMemeEditorState
 import com.plcoding.mastermeme.feature_editor.presentation.UIAddTextState
-import com.plcoding.mastermeme.feature_editor.presentation.ui.BottomAddTextView
+import com.plcoding.mastermeme.feature_editor.presentation.UIEditTextState
+import com.plcoding.mastermeme.feature_editor.presentation.ui.FooterAddTextView
 
 @Composable
 fun BottomEditOptions(
     uiState: UIMemeEditorState,
     addTextState: UIAddTextState,
+    editTextState: UIEditTextState,
     onEvent: OnUIMemeEditorEvent
 ) {
     Box(
@@ -26,8 +28,8 @@ fun BottomEditOptions(
             .wrapContentHeight()
     ) {
         when (uiState.rootViewState) {
-            RootViewState.AddTextView -> BottomAddTextView(addTextState, onEvent)
-            RootViewState.ModifyTextView -> BottomModifyTextView(onEvent)
+            RootViewState.AddTextView -> FooterAddTextView(addTextState, onEvent)
+            RootViewState.ModifyTextView -> FooterModifyTextView(editTextState,onEvent)
         }
     }
 }

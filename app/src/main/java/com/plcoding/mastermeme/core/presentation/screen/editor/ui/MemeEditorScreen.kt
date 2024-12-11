@@ -12,12 +12,16 @@ import androidx.compose.ui.Modifier
 import com.plcoding.mastermeme.core.presentation.screen.editor.OnUIMemeEditorEvent
 import com.plcoding.mastermeme.core.presentation.screen.editor.UIMemeEditorState
 import com.plcoding.mastermeme.feature_editor.presentation.UIAddTextState
+import com.plcoding.mastermeme.feature_editor.presentation.UIEditTextState
 import com.plcoding.mastermeme.feature_editor.presentation.ui.ConfirmationDialog
 import com.plcoding.mastermeme.feature_editor.presentation.ui.DesignOutputArea
 
 @Composable
 fun MemeEditorScreen(
-    uiRootState: UIMemeEditorState, onEvent: OnUIMemeEditorEvent, addTextState: UIAddTextState
+    uiRootState: UIMemeEditorState,
+    onEvent: OnUIMemeEditorEvent,
+    addTextState: UIAddTextState,
+    editTextState: UIEditTextState
 ) {
     Scaffold { inset ->
         DesignOutputArea(
@@ -33,7 +37,7 @@ fun MemeEditorScreen(
         ) {
             Header(onEvent)
             Spacer(Modifier.weight(1f))
-            BottomEditOptions(uiRootState, addTextState, onEvent)
+            BottomEditOptions(uiRootState, addTextState, editTextState, onEvent)
         }
 
         if (uiRootState.isExitConfirmationDialogVisible) ConfirmationDialog(onEvent)

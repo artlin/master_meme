@@ -10,11 +10,11 @@ import androidx.compose.ui.res.painterResource
 import com.plcoding.mastermeme.R
 
 @Composable
-fun CheckmarkButton(modifier: Modifier) {
+fun TextSizeButton(modifier: Modifier) {
     Box(modifier = modifier) {
         Icon(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.icon_checkmark_alone),
+            painter = painterResource(id = R.drawable.icon_text_size),
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurface
         )

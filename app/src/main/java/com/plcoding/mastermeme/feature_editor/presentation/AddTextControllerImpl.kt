@@ -6,7 +6,7 @@ import com.plcoding.mastermeme.core.presentation.base.UIStateDelegate
 import com.plcoding.mastermeme.feature_editor.domain.TextEntryFactory
 import com.plcoding.mastermeme.feature_editor.domain.TextEntryMetaData
 
-class AddTextControllerImpl(val textEntryFactory: TextEntryFactory) : AddTextController {
+class AddTextControllerImpl(private val textEntryFactory: TextEntryFactory) : AddTextController {
     override var uiAddTextState: UIAddTextState by UIStateDelegate(
         mutableStateOf(provideDefaultState())
     )

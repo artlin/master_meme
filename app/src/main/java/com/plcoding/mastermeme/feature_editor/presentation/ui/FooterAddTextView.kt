@@ -23,7 +23,7 @@ import com.plcoding.mastermeme.core.presentation.ui.button.UndoButton
 import com.plcoding.mastermeme.feature_editor.presentation.UIAddTextState
 
 @Composable
-fun BottomAddTextView(addTextState: UIAddTextState, onEvent: OnUIMemeEditorEvent) {
+fun FooterAddTextView(addTextState: UIAddTextState, onEvent: OnUIMemeEditorEvent) {
     val arrowModifiers = Modifier
         .width(24.dp)
         .aspectRatio(1f)

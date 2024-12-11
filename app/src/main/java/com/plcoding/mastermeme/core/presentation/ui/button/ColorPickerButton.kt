@@ -10,13 +10,11 @@ import androidx.compose.ui.res.painterResource
 import com.plcoding.mastermeme.R
 
 @Composable
-fun CheckmarkButton(modifier: Modifier) {
+fun ColorPickerButton(modifier: Modifier) {
     Box(modifier = modifier) {
         Icon(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.icon_checkmark_alone),
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurface
-        )
+            painter = painterResource(id = R.drawable.icon_color_picker),
+            contentDescription = null,)
     }
 }

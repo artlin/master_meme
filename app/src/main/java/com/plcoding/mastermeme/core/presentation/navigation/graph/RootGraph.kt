@@ -37,6 +37,7 @@ fun RootGraph(
             MemeEditorScreen(
                 uiRootState = viewModel.uiState,
                 addTextState = viewModel.uiAddTextState,
+                editTextState = viewModel.uiEditTextState,
                 onEvent = { viewModel.onEvent(it) })
         }
 

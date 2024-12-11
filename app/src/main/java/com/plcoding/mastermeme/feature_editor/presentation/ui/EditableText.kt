@@ -1,10 +1,13 @@
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -112,7 +115,7 @@ fun EditableText(
             )
         }
 
-    val tapModifier = Modifier .pointerInput(UUID.randomUUID()) {
+    val tapModifier = Modifier.pointerInput(UUID.randomUUID()) {
         detectTapGestures(
             onTap = {
                 println(textData.currentText)
@@ -121,18 +124,18 @@ fun EditableText(
                 if (currentTime - lastClickTime < doubleClickTimeWindow) {
                     // Double click detected
                     waitingForDoubleClick = false
-                        onEvent(UIAddTextPanelEvent.OnTextDoubleClicked(textData))
+                    onEvent(UIAddTextPanelEvent.OnTextDoubleClicked(textData))
                 } else {
 
                     // Potential single click
                     waitingForDoubleClick = true
-                        coroutineScope.launch {
-                            delay(doubleClickTimeWindow)
-                            if (waitingForDoubleClick) {
-                                waitingForDoubleClick = false
-                                onEvent(UIAddTextPanelEvent.OnTextClicked(textData))
-                            }
+                    coroutineScope.launch {
+                        delay(doubleClickTimeWindow)
+                        if (waitingForDoubleClick) {
+                            waitingForDoubleClick = false
+                            onEvent(UIAddTextPanelEvent.OnTextClicked(textData))
                         }
+                    }
                 }
                 lastClickTime = currentTime
             }
@@ -149,13 +152,21 @@ fun EditableText(
             y = (localOffsetY ?: externalOffsetY).roundToPx()
         )
     }
+
+    val backgroundModifier = when (textData.visualState) {
+        TextEntryVisualState.Focused, TextEntryVisualState.Editing -> Modifier
+            .background(color = Color.Transparent)
+            .border(width = 1.dp, color = Color.White, shape = RoundedCornerShape(4.dp))
+
+        TextEntryVisualState.Normal -> Modifier
+    }
     Box(
         Modifier
             .wrapContentSize()
             .then(movableModifier)
 //            .then(testOffsetModifier)
             .then(tapModifier)
-            .background(color = color)
+            .then(backgroundModifier).padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
         TextH1(
             text = textData.currentText,

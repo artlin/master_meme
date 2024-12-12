@@ -39,6 +39,10 @@ class MemeEditorViewModel(
                     UIEditTextPanelEvent.OnPickerOptionClicked -> pickerOption()
                     UIEditTextPanelEvent.OnSizeOptionClicked -> sizeOption()
                     UIEditTextPanelEvent.OnStyleOptionClicked -> styleOption()
+                    is UIEditTextPanelEvent.FonSizeChanged -> {
+                        handleSizeChanged(event.value)
+                        updateStyleOfSelectedText(getEditedStyleResult())
+                    }
                 }
             }
 

@@ -1,6 +1,7 @@
 package com.plcoding.mastermeme.feature_editor.presentation
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.font.FontStyle
 import com.plcoding.mastermeme.core.presentation.base.UIStateDelegate
 
 class EditTextControllerImpl : EditTextController {
@@ -18,6 +19,16 @@ class EditTextControllerImpl : EditTextController {
 
     override fun pickerOption() {
         newState = uiEditTextState.openColorPickerPanel()
+    }
+
+    override fun handleSizeChanged(value: Float) {
+        newState = uiEditTextState.updateTextSize { state ->
+            state.updateProgress(newProgress = value)
+        }
+    }
+
+    override fun getEditedStyleResult(): FontStyle {
+        return FontStyle.Normal
     }
 
 

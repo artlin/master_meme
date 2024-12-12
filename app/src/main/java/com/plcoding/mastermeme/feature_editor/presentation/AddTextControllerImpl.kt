@@ -49,6 +49,10 @@ class AddTextControllerImpl(private val textEntryFactory: TextEntryFactory) : Ad
         newState = uiAddTextState.updateSelectedText(textData)
     }
 
+    override fun updateStyleOfSelectedText(editedStyleResult: FontStyle) {
+        //todo: update font style
+    }
+
     override fun deselectAll() {
         newState = uiAddTextState.deselectAll()
     }

@@ -22,14 +22,14 @@ class AddTextControllerImpl(private val textEntryFactory: TextEntryFactory) : Ad
     }
 
     override fun handleTextClicked(textData: TextEntryMetaData) {
-        if (isEditInProgress()) return
+        if (isInteractionBlocked(textData)) return
         deselectAll()
         selectedTextEntry = textData.setFocused()
         newState = uiAddTextState.updateSelectedText(selectedTextEntry)
     }
 
     override fun handleTextDoubleClicked(textData: TextEntryMetaData) {
-        if (isEditInProgress()) return
+        if (isInteractionBlocked(textData)) return
         selectedTextEntry = textData.setEditing()
         newState = uiAddTextState.updateSelectedText(selectedTextEntry)
     }
@@ -58,7 +58,8 @@ class AddTextControllerImpl(private val textEntryFactory: TextEntryFactory) : Ad
             uiAddTextState = value ?: return
         }
 
-    private fun isEditInProgress(): Boolean {
+    private fun isInteractionBlocked(textData: TextEntryMetaData): Boolean {
+        if (textData.uid != selectedTextEntry.uid) return true
         return selectedTextEntry.visualState is TextEntryVisualState.Editing
     }
 

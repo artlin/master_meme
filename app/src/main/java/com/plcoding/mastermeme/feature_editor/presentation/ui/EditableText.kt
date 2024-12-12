@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -22,12 +23,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.plcoding.mastermeme.core.presentation.screen.editor.OnAddTextPanelEvent
 import com.plcoding.mastermeme.core.presentation.screen.editor.UIAddTextPanelEvent
 import com.plcoding.mastermeme.core.presentation.ui.text.TextH1
+import com.plcoding.mastermeme.core.presentation.ui.theme.LocalTextStyleTokens
 import com.plcoding.mastermeme.feature_editor.domain.TextEntryMetaData
 import com.plcoding.mastermeme.feature_editor.presentation.TextEntryVisualState
 import kotlinx.coroutines.delay
@@ -160,12 +163,15 @@ fun EditableText(
             .then(movableModifier)
 //            .then(testOffsetModifier)
             .then(tapModifier)
-            .then(backgroundModifier).padding(vertical = 4.dp, horizontal = 8.dp)
+            .then(backgroundModifier)
+            .padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
-        TextH1(
-            text = textData.currentText,
+        Text(
             modifier = Modifier.wrapContentSize(),
-            color = MaterialTheme.colorScheme.onSurface
+            textAlign = TextAlign.Start,
+            text = textData.currentText,
+            color = MaterialTheme.colorScheme.onSurface,
+            style = textData.editingStyle
         )
     }
 }

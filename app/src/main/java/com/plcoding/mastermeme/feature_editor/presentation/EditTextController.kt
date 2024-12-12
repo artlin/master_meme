@@ -1,6 +1,6 @@
 package com.plcoding.mastermeme.feature_editor.presentation
 
-import androidx.compose.ui.text.font.FontStyle
+import com.plcoding.mastermeme.core.domain.model.EditionData
 
 interface EditTextController {
     val uiEditTextState: UIEditTextState
@@ -9,5 +9,6 @@ interface EditTextController {
     fun sizeOption()
     fun pickerOption()
     fun handleSizeChanged(value: Float)
-    fun getEditedStyleResult(): FontStyle
+    fun setEditionData(editionData: EditionData)
+    fun getEditionData(): EditionData
 }

@@ -44,7 +44,7 @@ import com.plcoding.mastermeme.core.presentation.ui.button.CheckmarkButton
 import com.plcoding.mastermeme.core.presentation.ui.button.LettersBig
 import com.plcoding.mastermeme.core.presentation.ui.button.LettersSmall
 import com.plcoding.mastermeme.feature_editor.presentation.SelectedEditOption
-import com.plcoding.mastermeme.feature_editor.presentation.TextSize
+import com.plcoding.mastermeme.feature_editor.presentation.TextSizeState
 import com.plcoding.mastermeme.feature_editor.presentation.UIEditTextState
 
 @Composable
@@ -83,14 +83,14 @@ fun ButtonPanels(editTextState: UIEditTextState, onEvent: OnUIEditTextPanelEvent
             is SelectedEditOption.OptionStyle -> {}
             is SelectedEditOption.OptionPicker -> {}
 
-            is SelectedEditOption.OptionSize -> TextSizePanel(editTextState.textSize, onEvent)
+            is SelectedEditOption.OptionSize -> TextSizePanel(editTextState.textSizeState, onEvent)
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextSizePanel(sizeState: TextSize, onEvent: OnUIEditTextPanelEvent) {
+fun TextSizePanel(sizeState: TextSizeState, onEvent: OnUIEditTextPanelEvent) {
     val sizes = 36.dp
     var sliderValue by remember { mutableFloatStateOf(sizeState.uiProgress) }
     // State to track if thumb is pressed

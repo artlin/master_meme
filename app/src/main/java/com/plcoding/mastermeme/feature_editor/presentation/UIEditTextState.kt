@@ -6,18 +6,14 @@ import com.plcoding.mastermeme.feature_editor.presentation.SelectedEditOption.Op
 
 data class UIEditTextState(
     val currentOption: SelectedEditOption,
-    val textSize: TextSize = TextSize.provideDefaultState()
+    val textSizeState: TextSizeState = TextSizeState.provideDefaultState()
 ) {
     fun openSizePanel(): UIEditTextState = copy(currentOption = OptionSize)
     fun openStylePanel(): UIEditTextState = copy(currentOption = OptionStyle)
     fun openColorPickerPanel(): UIEditTextState = copy(currentOption = OptionPicker)
 
-    fun updateTextSize(predicate: (TextSize) -> TextSize): UIEditTextState {
-        return copy(textSize = predicate(textSize))
-    }
-
-    companion object {
-        fun provideDefaultSizeState(): TextSize = TextSize.provideDefaultState()
+    fun updateTextSize(predicate: (TextSizeState) -> TextSizeState): UIEditTextState {
+        return copy(textSizeState = predicate(textSizeState))
     }
 }
 
@@ -32,17 +28,3 @@ sealed interface SelectedEditOption {
 data class ColorPicker(val size: Int)
 
 data class TextStyle(val size: Int)
-
-
-data class TextSize(val size: Int, val uiProgress: Float) {
-
-    fun updateProgress(newProgress: Float): TextSize {
-        return copy(uiProgress = newProgress)
-    }
-
-    companion object {
-        fun provideDefaultState(): TextSize {
-            return TextSize(1, .5f)
-        }
-    }
-}

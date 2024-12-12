@@ -1,7 +1,7 @@
 package com.plcoding.mastermeme.feature_editor.presentation
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.text.font.FontStyle
+import com.plcoding.mastermeme.core.domain.model.EditionData
 import com.plcoding.mastermeme.core.presentation.base.UIStateDelegate
 import com.plcoding.mastermeme.feature_editor.domain.TextEntryFactory
 import com.plcoding.mastermeme.feature_editor.domain.TextEntryMetaData
@@ -11,18 +11,12 @@ class AddTextControllerImpl(private val textEntryFactory: TextEntryFactory) : Ad
         mutableStateOf(provideDefaultState())
     )
 
-    private var selectedTextEntry: TextEntryMetaData = TextEntryMetaData(
-        uid = "",
-        posX = 0f,
-        posY = 0f,
-        currentText = "",
-        editedText = "",
-        fontStyle = FontStyle.Normal,
-        visualState = TextEntryVisualState.Normal
-    )
+    private var selectedTextEntry: TextEntryMetaData =
+        textEntryFactory.createDefaultPlaceholderTextEntry()
 
     override fun addNewText() {
-        val textData = textEntryFactory.createDefaultTextAtRandomPosition()
+        val textData = textEntryFactory.createNewTextAtRandomPosition()
+            .updateTextStyleUsingEditionData(EditionData.getDefault())
         deselectAll()
         newState = uiAddTextState.addNewText(textData)
     }
@@ -49,8 +43,10 @@ class AddTextControllerImpl(private val textEntryFactory: TextEntryFactory) : Ad
         newState = uiAddTextState.updateSelectedText(textData)
     }
 
-    override fun updateStyleOfSelectedText(editedStyleResult: FontStyle) {
-        //todo: update font style
+    override fun updateStyleOfSelectedText(editionData: EditionData) {
+        selectedTextEntry =
+            selectedTextEntry.updateTextStyleUsingEditionData(editionData)
+        newState = uiAddTextState.updateSelectedText(selectedTextEntry)
     }
 
     override fun deselectAll() {

@@ -1,13 +1,35 @@
 package com.plcoding.mastermeme.feature_editor.presentation
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.text.font.FontStyle
+import com.plcoding.mastermeme.core.domain.model.EditionData
 import com.plcoding.mastermeme.core.presentation.base.UIStateDelegate
 
 class EditTextControllerImpl : EditTextController {
     override var uiEditTextState: UIEditTextState by UIStateDelegate(
         mutableStateOf(provideDefaultState())
     )
+
+    private var editionData: EditionData = EditionData.getDefault()
+
+    override fun handleSizeChanged(value: Float) {
+        newState = uiEditTextState.updateTextSize { state ->
+            state.updateProgress(newProgress = value)
+        }
+    }
+
+    override fun getEditionData(): EditionData {
+        updateEditionData()
+        return editionData
+    }
+
+    private fun updateEditionData() {
+        editionData = editionData.setFontScale(uiEditTextState.textSizeState.uiProgress)
+    }
+
+    override fun setEditionData(editionData: EditionData) {
+        this.editionData = editionData
+    }
+
 
     override fun styleOption() {
         newState = uiEditTextState.openStylePanel()
@@ -19,16 +41,6 @@ class EditTextControllerImpl : EditTextController {
 
     override fun pickerOption() {
         newState = uiEditTextState.openColorPickerPanel()
-    }
-
-    override fun handleSizeChanged(value: Float) {
-        newState = uiEditTextState.updateTextSize { state ->
-            state.updateProgress(newProgress = value)
-        }
-    }
-
-    override fun getEditedStyleResult(): FontStyle {
-        return FontStyle.Normal
     }
 
 
@@ -44,5 +56,4 @@ class EditTextControllerImpl : EditTextController {
         set(value) {
             uiEditTextState = value ?: return
         }
-
 }

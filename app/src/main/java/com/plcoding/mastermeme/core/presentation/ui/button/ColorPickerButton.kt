@@ -1,5 +1,6 @@
 package com.plcoding.mastermeme.core.presentation.ui.button
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
@@ -12,7 +13,7 @@ import com.plcoding.mastermeme.R
 @Composable
 fun ColorPickerButton(modifier: Modifier) {
     Box(modifier = modifier) {
-        Icon(
+        Image(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(id = R.drawable.icon_color_picker),
             contentDescription = null,)

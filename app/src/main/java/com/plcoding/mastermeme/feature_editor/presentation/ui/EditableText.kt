@@ -59,12 +59,6 @@ fun EditableText(
     var textWidth by remember { mutableIntStateOf(0) }
     var textHeight by remember { mutableIntStateOf(0) }
 
-    val color = when (textData.visualState) {
-        TextEntryVisualState.Editing -> Color.Red
-        TextEntryVisualState.Focused -> Color.Green
-        TextEntryVisualState.Normal -> Color.Unspecified
-    }
-
     val movableModifier = Modifier
         .offset {
             IntOffset(

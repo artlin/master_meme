@@ -8,7 +8,10 @@ interface EditTextController {
     fun styleOption()
     fun sizeOption()
     fun pickerOption()
-    fun handleSizeChanged(value: Float)
+    fun updateEditionDataWithFontProgress(value: Float)
     fun setEditionData(editionData: EditionData)
     fun getEditionData(): EditionData
+    fun cancelEditState()
+    fun getCurrentEditData(): EditionData
+    fun applyEditionData(editionData: EditionData)
 }

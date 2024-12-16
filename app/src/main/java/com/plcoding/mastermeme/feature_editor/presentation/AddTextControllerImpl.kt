@@ -12,26 +12,26 @@ class AddTextControllerImpl(private val textEntryFactory: TextEntryFactory) : Ad
     )
 
     private var selectedTextEntry: TextEntryMetaData =
-        textEntryFactory.createDefaultPlaceholderTextEntry()
+        textEntryFactory.createDefaultPlaceholderTextEntry(EditionData.getDefault())
 
-    override fun addNewText() {
-        val textData = textEntryFactory.createNewTextAtRandomPosition()
+    override fun addNewTextAtRandomPosition() {
+        val textData = textEntryFactory.createNewTextAtRandomPosition(EditionData.getDefault())
             .updateTextStyleUsingEditionData(EditionData.getDefault())
-        deselectAll()
+        deselectAllTextElements()
         newState = uiAddTextState.addNewText(textData)
     }
 
     override fun handleTextClicked(textData: TextEntryMetaData) {
         if (isInteractionBlocked(textData)) return
-        deselectAll()
+        deselectAllTextElements()
         selectedTextEntry = textData.setFocused()
-        newState = uiAddTextState.updateSelectedText(selectedTextEntry)
+        newState = uiAddTextState.updateSelectedElement(selectedTextEntry)
     }
 
     override fun handleTextDoubleClicked(textData: TextEntryMetaData) {
         if (isInteractionBlocked(textData)) return
         selectedTextEntry = textData.setEditing()
-        newState = uiAddTextState.updateSelectedText(selectedTextEntry)
+        newState = uiAddTextState.updateSelectedElement(selectedTextEntry)
     }
 
     override fun handleDragEnd(
@@ -40,17 +40,29 @@ class AddTextControllerImpl(private val textEntryFactory: TextEntryFactory) : Ad
         newPosY: Float
     ) {
         selectedTextEntry = textData.updatePosition(newPosX, newPosY)
-        newState = uiAddTextState.updateSelectedText(textData)
+        newState = uiAddTextState.updateSelectedElement(textData)
     }
 
     override fun updateStyleOfSelectedText(editionData: EditionData) {
         selectedTextEntry =
             selectedTextEntry.updateTextStyleUsingEditionData(editionData)
-        newState = uiAddTextState.updateSelectedText(selectedTextEntry)
+        newState = uiAddTextState.updateSelectedElement(selectedTextEntry)
     }
 
-    override fun deselectAll() {
-        newState = uiAddTextState.deselectAll()
+    override fun resetSelectedTextToOriginal() {
+        selectedTextEntry = selectedTextEntry.resetChanges()
+        newState = uiAddTextState.updateSelectedElement(selectedTextEntry)
+    }
+
+    override fun saveEditValues(selectedTextEditData: EditionData) {
+        // update selected text metaData with selectedTextEdit data
+        selectedTextEntry = selectedTextEntry.saveEditionData(selectedTextEditData)
+        newState = uiAddTextState.updateSelectedElement(selectedTextEntry)
+    }
+
+    override fun deselectAllTextElements() {
+        selectedTextEntry = selectedTextEntry.setNormal()
+        newState = uiAddTextState.deselectAll().updateSelectedElement(selectedTextEntry)
     }
 
     var newState: UIAddTextState? = null
@@ -58,7 +70,7 @@ class AddTextControllerImpl(private val textEntryFactory: TextEntryFactory) : Ad
             uiAddTextState = value ?: return
         }
 
-    private fun isInteractionBlocked(textData: TextEntryMetaData): Boolean {
+    override fun isInteractionBlocked(textData: TextEntryMetaData): Boolean {
         if (textData.uid != selectedTextEntry.uid) return true
         return selectedTextEntry.visualState is TextEntryVisualState.Editing
     }

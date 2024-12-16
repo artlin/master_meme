@@ -40,7 +40,8 @@ class MemeEditorViewModel(
                     UIEditTextPanelEvent.OnSizeOptionClicked -> sizeOption()
                     UIEditTextPanelEvent.OnStyleOptionClicked -> styleOption()
                     is UIEditTextPanelEvent.FonSizeChanged -> {
-                        handleSizeChanged(event.value)
+                        val fontProgress = event.value
+                        updateEditionDataWithFontProgress(fontProgress)
                         updateStyleOfSelectedText(getEditionData())
                     }
                 }
@@ -48,12 +49,19 @@ class MemeEditorViewModel(
 
             is UIAddTextPanelEvent -> {
                 when (event) {
-                    UIAddTextPanelEvent.AddTextClicked -> addNewText()
+                    UIAddTextPanelEvent.AddTextClicked -> {
+                        addNewTextAtRandomPosition()
+                    }
+
                     UIAddTextPanelEvent.RedoButtonClicked -> {}
                     UIAddTextPanelEvent.SaveMemeClicked -> {}
                     UIAddTextPanelEvent.UndoButtonClicked -> {}
                     is UIAddTextPanelEvent.OnTextClicked -> {
-                        handleTextClicked(textData = event.textEntryMetaData)
+                        val textMetaData = event.textEntryMetaData
+                        if (isInteractionBlocked(textMetaData)) return
+                        updateStyleOfSelectedText(textMetaData.editionData)
+                        applyEditionData(textMetaData.editionData)
+                        handleTextClicked(textData = textMetaData)
                         newState = uiState.goToModifyTextView()
                     }
 
@@ -67,9 +75,19 @@ class MemeEditorViewModel(
             }
 
             UIMemeEditorEvent.OnEditCancelClicked -> {
-                deselectAll()
+                deselectAllTextElements()
                 newState = uiState.goToAddTextView()
+                cancelEditState()
+                resetSelectedTextToOriginal()
                 // add cancelation logic, resume previous view
+            }
+
+            UIMemeEditorEvent.OnEditConfirmClicked -> {
+                saveEditValues(getCurrentEditData())
+                cancelEditState()
+                newState = uiState.goToAddTextView()
+                deselectAllTextElements()
+                // add confirmation logic, resume previous view
             }
         }
     }

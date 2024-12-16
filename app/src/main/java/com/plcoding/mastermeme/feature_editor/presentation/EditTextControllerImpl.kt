@@ -11,7 +11,7 @@ class EditTextControllerImpl : EditTextController {
 
     private var editionData: EditionData = EditionData.getDefault()
 
-    override fun handleSizeChanged(value: Float) {
+    override fun updateEditionDataWithFontProgress(value: Float) {
         newState = uiEditTextState.updateTextSize { state ->
             state.updateProgress(newProgress = value)
         }
@@ -20,6 +20,22 @@ class EditTextControllerImpl : EditTextController {
     override fun getEditionData(): EditionData {
         updateEditionData()
         return editionData
+    }
+
+    override fun cancelEditState() {
+        newState = provideDefaultState()
+        editionData = EditionData.getDefault()
+    }
+
+    override fun getCurrentEditData(): EditionData {
+        return editionData
+    }
+
+    override fun applyEditionData(editionData: EditionData) {
+        this.editionData = editionData
+        newState = uiEditTextState.updateTextSize { state ->
+            state.copy(uiProgress = editionData.getFontScale())
+        }
     }
 
     private fun updateEditionData() {

@@ -29,8 +29,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.plcoding.mastermeme.core.presentation.screen.editor.OnAddTextPanelEvent
 import com.plcoding.mastermeme.core.presentation.screen.editor.UIAddTextPanelEvent
-import com.plcoding.mastermeme.core.presentation.ui.text.TextH1
-import com.plcoding.mastermeme.core.presentation.ui.theme.LocalTextStyleTokens
 import com.plcoding.mastermeme.feature_editor.domain.TextEntryMetaData
 import com.plcoding.mastermeme.feature_editor.presentation.TextEntryVisualState
 import kotlinx.coroutines.delay
@@ -115,7 +113,7 @@ fun EditableText(
     val tapModifier = Modifier.pointerInput(UUID.randomUUID()) {
         detectTapGestures(
             onTap = {
-                println(textData.currentText)
+                println(textData.originalText)
                 onEvent(UIAddTextPanelEvent.OnTextClicked(textData))
                 val currentTime = System.currentTimeMillis()
                 if (currentTime - lastClickTime < doubleClickTimeWindow) {
@@ -169,7 +167,7 @@ fun EditableText(
         Text(
             modifier = Modifier.wrapContentSize(),
             textAlign = TextAlign.Start,
-            text = textData.currentText,
+            text = textData.originalText,
             color = MaterialTheme.colorScheme.onSurface,
             style = textData.editingStyle
         )

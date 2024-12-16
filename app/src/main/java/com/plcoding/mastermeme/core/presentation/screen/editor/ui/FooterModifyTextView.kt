@@ -64,7 +64,9 @@ fun FooterModifyTextView(editTextState: UIEditTextState, onEvent: OnUIMemeEditor
                     .size(14.dp)
                     .clickable { onEvent(UIMemeEditorEvent.OnEditCancelClicked) })
             OptionButtons(editTextState, onEvent)
-            CheckmarkButton(modifier = Modifier.size(14.dp))
+            CheckmarkButton(modifier = Modifier.size(14.dp).clickable {
+                onEvent(UIMemeEditorEvent.OnEditConfirmClicked)
+            })
         }
     }
 }

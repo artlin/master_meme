@@ -10,10 +10,11 @@ data class TextEntryMetaData(
     val uid: String,
     val posX: Float,
     val posY: Float,
-    val currentText: String,
+    val originalText: String,
     val editedText: String,
-    val textStyle: TextStyle,
+    val originalStyle: TextStyle,
     val editingStyle: TextStyle,
+    val editionData: EditionData,
     val visualState: TextEntryVisualState
 ) {
     fun setFocused(): TextEntryMetaData {
@@ -40,6 +41,14 @@ data class TextEntryMetaData(
     }
 
     private fun updateTextStyle(predicate: (textStyle: TextStyle) -> TextStyle): TextEntryMetaData {
-        return copy(editingStyle = predicate(textStyle))
+        return copy(editingStyle = predicate(originalStyle))
+    }
+
+    fun resetChanges(): TextEntryMetaData {
+        return updateTextStyleUsingEditionData(editionData)
+    }
+
+    fun saveEditionData(editionData: EditionData): TextEntryMetaData {
+        return copy(editionData = editionData)
     }
 }

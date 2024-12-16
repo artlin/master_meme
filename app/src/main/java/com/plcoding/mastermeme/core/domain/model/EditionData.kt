@@ -14,6 +14,10 @@ data class EditionData(private val mFontScale: Float) {
         return fontSize
     }
 
+    fun getFontScale():Float{
+        return mFontScale
+    }
+
     companion object {
         fun getDefault(): EditionData {
             return EditionData(mFontScale = .5f)

@@ -12,7 +12,7 @@ data class UIAddTextState(
         return copy(textEntries = newMap)
     }
 
-    fun updateSelectedText(newTextEntry: TextEntryMetaData): UIAddTextState {
+    fun updateSelectedElement(newTextEntry: TextEntryMetaData): UIAddTextState {
         // Find the exact instance from the textEntries Set
 //        val existingInstance = textEntries.find { it.uid == newTextEntry.uid } ?: return this
         // Create new instance with updated state
